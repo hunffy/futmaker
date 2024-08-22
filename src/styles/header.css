@@ -1,0 +1,25 @@
+.header {
+  height: 100px;
+  border-bottom: 1px solid black;
+}
+
+.header-wrapper {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  .header-logo {
+    padding: 10px;
+  }
+}
+
+.header-navi {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  margin-left: 5vw;
+}
+
+.right-wrapper {
+  display: flex;
+  margin-left: 5vw;
+}

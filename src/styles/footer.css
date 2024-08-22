@@ -1,0 +1,15 @@
+.footer-list {
+  display: flex;
+  justify-content: center;
+}
+
+.footer-item {
+  list-style: none;
+  margin-left: 3vw;
+  color: rgb(172, 167, 167);
+}
+
+.footer-item:nth-child(7) {
+  color: black;
+  font-weight: bold;
+}

@@ -1,0 +1,14 @@
+.Main {
+  display: flex;
+  flex-direction: column;
+}
+
+.carusel {
+  height: 50vh;
+  background-color: yellowgreen;
+}
+
+.recomend {
+  height: 50vh;
+  background-color: gray;
+}
