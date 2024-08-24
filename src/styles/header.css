@@ -23,3 +23,15 @@
   display: flex;
   margin-left: 5vw;
 }
+
+.header-logo {
+  cursor: pointer;
+}
+
+.loginLogo {
+  button {
+    border: none;
+    background-color: white;
+    cursor: pointer;
+  }
+}

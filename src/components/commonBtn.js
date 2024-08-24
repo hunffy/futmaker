@@ -1,7 +1,11 @@
+import "../styles/commonbtn.css";
+
 function CommonBtn(props) {
   return (
     <div className="commonBtn">
-      <button onClick={props.onClick}>{props.text}</button>
+      <button className="commonButton" onClick={props.onClick}>
+        {props.text}
+      </button>
     </div>
   );
 }

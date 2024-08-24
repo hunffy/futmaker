@@ -1,6 +1,7 @@
 import React from "react";
 import CommonBtn from "./commonBtn";
 import { useNavigate } from "react-router-dom";
+import MainLogo from "../imges/mainLogo.png";
 import "../styles/header.css";
 function Header() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ function Header() {
     <div className="header">
       <div className="header-wrapper">
         <div className="header-logo" onClick={() => navigate("/")}>
-          메인로고
+          <img src={MainLogo}></img>
         </div>
         <div className="header-navi">
           <CommonBtn
@@ -41,7 +42,9 @@ function Header() {
         <div className="right-wrapper">
           <div className="mypageLogo">마이페이지</div>
           <div className="searchLogo">검색</div>
-          <div className="loginLogo">로그인/로그아웃</div>
+          <div className="loginLogo">
+            <button onClick={() => navigate("/login")}>로그인</button>
+          </div>
         </div>
       </div>
     </div>

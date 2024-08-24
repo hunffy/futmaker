@@ -9,16 +9,28 @@ import Footer from "./components/footer";
 import Notice from "./pages/notice";
 import Maker from "./pages/maker";
 import Board from "./pages/board";
+import Login from "./pages/login";
+import SignUp from "./pages/signup";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/notice" element={<Notice />} />
-        <Route path="/maker" element={<Maker />} />
-        <Route path="/board" element={<Board />} />
+        <Route className="route-container" path="/" element={<Main />} />
+        <Route
+          className="route-container"
+          path="/notice"
+          element={<Notice />}
+        />
+        <Route className="route-container" path="/maker" element={<Maker />} />
+        <Route className="route-container" path="/board" element={<Board />} />
+        <Route className="route-container" path="/login" element={<Login />} />
+        <Route
+          className="route-container"
+          path="/signup"
+          element={<SignUp />}
+        />
       </Routes>
       <Footer />
     </BrowserRouter>
