@@ -7,7 +7,29 @@ function Main() {
       <div className="carusel">
         <Carousel />
       </div>
-      <div className="recomend">가장 인기있는 포메이션</div>
+      <div className="recomend">
+        <div className="item">
+          <div className="item-info">
+            <h1>1-3-2</h1>
+            <h4>작성자이름</h4>
+          </div>
+          <img src="./images/recomend.png" alt="인기이미지"></img>
+        </div>
+        <div className="item">
+          <div className="item-info">
+            <h1>1-2-3</h1>
+            <h4>작성자이름</h4>
+          </div>
+          <img src="./images/recomend.png" alt="인기이미지"></img>
+        </div>
+        <div className="item">
+          <div className="item-info">
+            <h1>1-2-1-2</h1>
+            <h4>작성자이름</h4>
+          </div>
+          <img src="./images/recomend.png" alt="인기이미지"></img>
+        </div>
+      </div>
     </div>
   );
 }
