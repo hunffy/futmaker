@@ -22,16 +22,18 @@
 .right-wrapper {
   display: flex;
   margin-left: 5vw;
+  .loginLogo {
+    button {
+      border: none;
+      background-color: white;
+      cursor: pointer;
+    }
+  }
+  .mypageLogo {
+    cursor: pointer;
+  }
 }
 
 .header-logo {
   cursor: pointer;
-}
-
-.loginLogo {
-  button {
-    border: none;
-    background-color: white;
-    cursor: pointer;
-  }
 }

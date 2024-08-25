@@ -57,7 +57,9 @@ function Header() {
           />
         </div>
         <div className="right-wrapper">
-          <div className="mypageLogo">마이페이지</div>
+          <div className="mypageLogo" onClick={() => navigate("/mypage")}>
+            마이페이지
+          </div>
           <div className="searchLogo">검색</div>
           <div className="loginLogo">
             {userInfo ? (

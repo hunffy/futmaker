@@ -15,6 +15,7 @@ import Maker from "./pages/maker";
 import Board from "./pages/board";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
+import Mypage from "./pages/mypage";
 
 //스토어 설정
 import store from "./store";
@@ -27,32 +28,13 @@ root.render(
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route className="route-container" path="/" element={<Main />} />
-          <Route
-            className="route-container"
-            path="/notice"
-            element={<Notice />}
-          />
-          <Route
-            className="route-container"
-            path="/maker"
-            element={<Maker />}
-          />
-          <Route
-            className="route-container"
-            path="/board"
-            element={<Board />}
-          />
-          <Route
-            className="route-container"
-            path="/login"
-            element={<Login />}
-          />
-          <Route
-            className="route-container"
-            path="/signup"
-            element={<SignUp />}
-          />
+          <Route path="/" element={<Main />} />
+          <Route path="/notice" element={<Notice />} />
+          <Route path="/maker" element={<Maker />} />
+          <Route path="/board" element={<Board />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/mypage" element={<Mypage />} />
         </Routes>
         <Footer />
       </BrowserRouter>
