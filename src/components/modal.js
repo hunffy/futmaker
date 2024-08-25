@@ -13,10 +13,13 @@ function Modal(props) {
     <div className="Modal">
       <div className="modal-wrapper">
         <h1>{props.title}</h1>
-        <input
-          placeholder="휴대폰번호를 입력하세요"
-          onClick={handleClickInput}
-        />
+        <form method="get">
+          <input
+            placeholder="휴대폰번호를 입력하세요"
+            onClick={handleClickInput}
+          />
+        </form>
+        <button type="submit">확인</button>
         <button onClick={handleCloseModal}>닫기</button>
       </div>
     </div>
@@ -25,12 +28,18 @@ function Modal(props) {
       <div className="modal-wrapper">
         <h1>{props.title}</h1>
         <div className="input-wrapper">
-          <input placeholder="아이디를 입력하세요" onClick={handleClickInput} />
-          <input
-            placeholder="휴대폰번호를 입력하세요"
-            onClick={handleClickInput}
-          />
+          <form method="get">
+            <input
+              placeholder="아이디를 입력하세요"
+              onClick={handleClickInput}
+            />
+            <input
+              placeholder="휴대폰번호를 입력하세요"
+              onClick={handleClickInput}
+            />
+          </form>
         </div>
+        <button type="submit">확인</button>
         <button onClick={handleCloseModal}>닫기</button>
       </div>
     </div>

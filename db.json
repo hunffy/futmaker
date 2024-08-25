@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": "25a8",
+      "userId": "huni124",
+      "userPhone": "01012345678",
+      "userPw": "1234"
+    },
+    {
+      "id": "2b00",
+      "userId": "aa1234",
+      "userPhone": "0101111",
+      "userPw": "1234"
+    },
+    {
+      "id": "a23f",
+      "userId": "bbbb",
+      "userPhone": "1010101",
+      "userPw": "1234"
+    },
+    {
+      "id": "0ca5",
+      "userId": "asd",
+      "userPhone": "asd",
+      "userPw": "asd"
+    }
+  ]
+}

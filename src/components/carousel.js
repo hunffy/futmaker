@@ -2,11 +2,12 @@ import "../styles/carousel.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import CarouselImg1 from "../imges/carousel1.jpg";
-import CarouselImg2 from "../imges/carousel2.jpg";
-import CarouselImg3 from "../imges/carousel3.jpg";
-import CarouselImg4 from "../imges/carousel4.jpg";
-import CarouselImg5 from "../imges/carousel5.jpg";
+
+import carouselImg1 from "../images/carousel1.jpg";
+import carouselImg2 from "../images/carousel2.jpg";
+import carouselImg3 from "../images/carousel3.jpg";
+import carouselImg4 from "../images/carousel4.jpg";
+import carouselImg5 from "../images/carousel5.jpg";
 function Carousel() {
   const settings = {
     dots: true,
@@ -23,35 +24,35 @@ function Carousel() {
         <div className="carousel-item">
           <img
             className="carousel-img"
-            src={CarouselImg1}
+            src={carouselImg1}
             alt="캐러셀이미지"
           ></img>
         </div>
         <div className="carousel-item">
           <img
             className="carousel-img"
-            src={CarouselImg2}
+            src={carouselImg2}
             alt="캐러셀이미지"
           ></img>
         </div>
         <div className="carousel-item">
           <img
             className="carousel-img"
-            src={CarouselImg3}
+            src={carouselImg3}
             alt="캐러셀이미지"
           ></img>
         </div>
         <div className="carousel-item">
           <img
             className="carousel-img"
-            src={CarouselImg4}
+            src={carouselImg4}
             alt="캐러셀이미지"
           ></img>
         </div>
         <div className="carousel-item">
           <img
             className="carousel-img"
-            src={CarouselImg5}
+            src={carouselImg5}
             alt="캐러셀이미지"
           ></img>
         </div>

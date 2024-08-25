@@ -1,0 +1,40 @@
+.signup {
+  height: 80vh;
+  background-image: url("../images/background.png");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-wrapper {
+  h1 {
+    text-align: center;
+  }
+  width: 40vw;
+  height: 40vh;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  border: none;
+  background-color: white;
+  button {
+    width: 30vw;
+    height: 3vh;
+    margin-top: 20px;
+    background-color: #23af17;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+}
+
+.input-wrapper {
+  input {
+    width: 30vw;
+    height: 5vh;
+  }
+}
