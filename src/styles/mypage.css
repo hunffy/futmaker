@@ -1,0 +1,32 @@
+.mypage {
+  height: 80vh;
+  display: flex;
+}
+
+.u-info {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 25vw;
+  height: 55vh;
+  margin: 5vw;
+}
+
+.squad-wrapper {
+  width: 40vw;
+  margin-left: 25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  select {
+    width: 50rem;
+    height: 2rem;
+    text-align: center;
+  }
+  .squad-info {
+    display: flex;
+    flex-direction: column;
+  }
+}

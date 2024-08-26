@@ -41,38 +41,43 @@ function Modal(props) {
   };
 
   return props.title == "아이디찾기" ? (
-    <div className="Modal">
+    <div className="Id-Modal">
       <div className="modal-wrapper">
         <h1>{props.title}</h1>
         <input
-          className="inputPhone"
+          className="modal-inputPhone"
           placeholder="휴대폰번호를 입력하세요"
           onClick={handleClickInput}
           onChange={(e) => setPhone(e.target.value)}
         />
         <button onClick={() => SearchResult(props.title)}>확인</button>
-        <button onClick={handleCloseModal}>닫기</button>
+        <button className="close-button" onClick={handleCloseModal}>
+          닫기
+        </button>
       </div>
     </div>
   ) : (
-    <div className="Modal">
+    <div className="Pw-Modal">
       <div className="modal-wrapper">
         <h1>{props.title}</h1>
         <div className="input-wrapper">
           <input
-            className="inputId"
+            className="modal-inputId"
             placeholder="아이디를 입력하세요"
             onClick={handleClickInput}
             onChange={(e) => setId(e.target.value)}
           />
           <input
+            className="modal-inputPw"
             placeholder="휴대폰번호를 입력하세요"
             onClick={handleClickInput}
             onChange={(e) => setPhone(e.target.value)}
           />
         </div>
         <button onClick={() => SearchResult(props.title)}>확인</button>
-        <button onClick={handleCloseModal}>닫기</button>
+        <button className="close-button" onClick={handleCloseModal}>
+          닫기
+        </button>
       </div>
     </div>
   );

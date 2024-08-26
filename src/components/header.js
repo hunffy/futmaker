@@ -2,6 +2,11 @@ import React, { useEffect } from "react";
 import CommonBtn from "./commonBtn";
 import { useNavigate } from "react-router-dom";
 import MainLogo from "../images/mainLogo.png";
+import LoginLogo from "../images/login-logo.png";
+import LogOutLogo from "../images/logout-logo.png";
+import SearchLogo from "../images/search-logo.png";
+import MypageLogo from "../images/mypage-logo.png";
+
 import "../styles/header.css";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -58,14 +63,20 @@ function Header() {
         </div>
         <div className="right-wrapper">
           <div className="mypageLogo" onClick={() => navigate("/mypage")}>
-            마이페이지
+            <img src={MypageLogo} alt="마이페이지로고"></img>
           </div>
-          <div className="searchLogo">검색</div>
+          <div className="searchLogo">
+            <img src={SearchLogo} alt="검색로고"></img>
+          </div>
           <div className="loginLogo">
             {userInfo ? (
-              <button onClick={logoutHandler}>로그아웃</button>
+              <button onClick={logoutHandler}>
+                <img src={LogOutLogo} alt="로그아웃로고"></img>
+              </button>
             ) : (
-              <button onClick={() => navigate("/login")}>로그인</button>
+              <button onClick={() => navigate("/login")}>
+                <img src={LoginLogo} alt="로그인로고"></img>
+              </button>
             )}
           </div>
         </div>

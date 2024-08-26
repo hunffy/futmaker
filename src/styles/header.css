@@ -32,6 +32,10 @@
   .mypageLogo {
     cursor: pointer;
   }
+  img {
+    width: 2vw;
+    height: 4vh;
+  }
 }
 
 .header-logo {

@@ -1,0 +1,17 @@
+.notice {
+  border-bottom: 1px solid black;
+}
+
+.notice-title {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  li {
+    width: 100%;
+    list-style: none;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    border-right: 1px solid black;
+  }
+}

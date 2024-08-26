@@ -1,3 +1,5 @@
+import "../styles/idSearch.css";
+
 function IdSearch() {
   return <div className="idsearch">아이디찾기</div>;
 }
