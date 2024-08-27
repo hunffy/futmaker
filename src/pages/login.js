@@ -1,17 +1,23 @@
 import "../styles/login.css";
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "../components/modal";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+
 function Login() {
   const dispath = useDispatch();
   const navigate = useNavigate();
   const [IdnModal, setIdModal] = useState(false);
   const [pwModal, setPwModal] = useState(false);
-
   const [userId, setUserId] = useState();
   const [userPw, setUserPw] = useState();
+
+  useEffect(() => {
+    if (!window.Kakao.isInitialized()) {
+      window.Kakao.init("60e28f54dfe04b64f60e586bb823f191");
+    }
+  }, []);
 
   async function loginHandler() {
     try {
@@ -28,9 +34,38 @@ function Login() {
         alert("아이디 또는 비밀번호가 일치하지않습니다.");
       }
     } catch (error) {
-      console.log("로그인시도중 에러발생", error);
+      console.log("로그인 시도 중 에러 발생", error);
     }
   }
+
+  const kakaoLoginHandler = () => {
+    if (!window.Kakao) {
+      alert("카카오 SDK가 로드되지 않았습니다.");
+      return;
+    }
+
+    window.Kakao.Auth.login({
+      success: function (authObj) {
+        window.Kakao.API.request({
+          url: "/v2/user/me",
+          success: function (res) {
+            const user = {
+              userId: res.kakao_account.email,
+            };
+            dispath({ type: "LOGIN_USER", payload: user });
+            localStorage.setItem("userInfo", JSON.stringify(user));
+            navigate("/");
+          },
+          fail: function (error) {
+            console.log(error);
+          },
+        });
+      },
+      fail: function (err) {
+        alert(JSON.stringify(err));
+      },
+    });
+  };
 
   return (
     <div className="login">
@@ -54,7 +89,9 @@ function Login() {
           <button className="login-btn" onClick={loginHandler}>
             로그인
           </button>
-          <button className="kakao-login-btn">카카오톡 로그인</button>
+          <button className="kakao-login-btn" onClick={kakaoLoginHandler}>
+            카카오톡 로그인
+          </button>
         </div>
         <div className="login-more">
           <button onClick={() => setIdModal(!IdnModal)}>

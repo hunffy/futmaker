@@ -33,7 +33,9 @@
   }
 }
 
-.input-wrapper {
+.signup-input-wrapper {
+  display: flex;
+  flex-direction: column;
   input {
     width: 30vw;
     height: 5vh;

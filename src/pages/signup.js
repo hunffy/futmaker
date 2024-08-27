@@ -47,7 +47,7 @@ function SignUp() {
     <div className="signup">
       <div className="signup-wrapper">
         <h1>회원가입</h1>
-        <div className="input-wrapper">
+        <div className="signup-input-wrapper">
           <input
             placeholder="아이디"
             onChange={(e) => setUserId(e.target.value)}
