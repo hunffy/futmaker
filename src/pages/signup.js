@@ -1,55 +1,65 @@
 import React, { useState } from "react";
 import "../styles/signup.css";
 import { useNavigate } from "react-router-dom";
-
-//전역상태관리
 import { useDispatch } from "react-redux";
-import axios from "axios";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getFirestore, setDoc, doc } from "firebase/firestore";
+import app from "../firebase";
 
 function SignUp() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const [userId, setUserId] = useState();
-  const [userPhone, setUserPhone] = useState();
-  const [userPw, setUserPw] = useState();
-  const [userPwConfirm, setUserPwConfirm] = useState();
-  const dispath = useDispatch();
+  const [userId, setUserId] = useState("");
+  const [userPhone, setUserPhone] = useState("");
+  const [userPw, setUserPw] = useState("");
+  const [userPwConfirm, setUserPwConfirm] = useState("");
 
   async function signupHandler() {
     if (userPw !== userPwConfirm) {
-      alert("비밀번호가 일치하지않습니다.");
+      alert("비밀번호가 일치하지 않습니다.");
       return;
     }
 
-    const users = {
-      userId,
-      userPhone,
-      userPw,
-    };
+    const auth = getAuth(app);
+    const db = getFirestore(app); // Firestore 인스턴스 생성
 
     try {
-      const response = await axios.post("http://localhost:3000/users", users);
-      dispath({ type: "ADD_USER", payload: response.data });
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        userId,
+        userPw
+      );
+      const user = userCredential.user;
 
-      alert("회원기입 완료");
+      // Firestore에 사용자 정보 저장
+      await setDoc(doc(db, "users", user.uid), {
+        userId,
+        userPhone,
+      });
+
+      alert("회원가입 완료");
       setUserId("");
       setUserPhone("");
       setUserPw("");
       setUserPwConfirm("");
 
+      dispatch({ type: "ADD_USER", payload: { userId, userPhone } });
+
       navigate("/");
     } catch (error) {
       console.log("회원가입 실패 에러", error);
-      alert("회원가입 실패 에러 내용을 확인하세요");
+      alert("회원가입 실패: " + error.message);
     }
   }
+
   return (
     <div className="signup">
       <div className="signup-wrapper">
         <h1>회원가입</h1>
         <div className="signup-input-wrapper">
           <input
-            placeholder="아이디"
+            placeholder="아이디 (이메일 형식)"
             onChange={(e) => setUserId(e.target.value)}
           />
           <input

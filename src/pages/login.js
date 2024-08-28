@@ -2,38 +2,51 @@ import "../styles/login.css";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import Modal from "../components/modal";
-import axios from "axios";
 import { useDispatch } from "react-redux";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import app from "../firebase";
 
 function Login() {
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [IdnModal, setIdModal] = useState(false);
   const [pwModal, setPwModal] = useState(false);
-  const [userId, setUserId] = useState();
-  const [userPw, setUserPw] = useState();
+  const [userId, setUserId] = useState("");
+  const [userPw, setUserPw] = useState("");
 
   useEffect(() => {
-    if (!window.Kakao.isInitialized()) {
-      window.Kakao.init("60e28f54dfe04b64f60e586bb823f191");
+    getAuth(app);
+    if (window.Kakao) {
+      if (!window.Kakao.isInitialized()) {
+        window.Kakao.init("60e28f54dfe04b64f60e586bb823f191");
+      }
     }
   }, []);
 
   async function loginHandler() {
+    const auth = getAuth(app);
     try {
-      const response = await axios.get("http://localhost:3000/users");
-      const user = response.data.find(
-        (user) => user.userId === userId && user.userPw === userPw
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        userId,
+        userPw
       );
+      const user = userCredential.user;
 
-      if (user) {
-        dispath({ type: "LOGIN_USER", payload: user });
-        localStorage.setItem("userInfo", JSON.stringify(user));
+      // Firestore에서 추가 사용자 정보 가져오기
+      const db = getFirestore();
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (userDoc.exists()) {
+        const userData = { uid: user.uid, ...userDoc.data() };
+        dispatch({ type: "LOGIN_USER", payload: userData });
+        localStorage.setItem("userInfo", JSON.stringify(userData));
         navigate("/");
       } else {
-        alert("아이디 또는 비밀번호가 일치하지않습니다.");
+        alert("사용자 정보를 찾을 수 없습니다.");
       }
     } catch (error) {
+      alert("아이디 또는 비밀번호가 일치하지 않습니다.");
       console.log("로그인 시도 중 에러 발생", error);
     }
   }
@@ -52,7 +65,7 @@ function Login() {
             const user = {
               userId: res.kakao_account.email,
             };
-            dispath({ type: "LOGIN_USER", payload: user });
+            dispatch({ type: "LOGIN_USER", payload: user });
             localStorage.setItem("userInfo", JSON.stringify(user));
             navigate("/");
           },

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CommonBtn from "./commonBtn";
 import { useNavigate } from "react-router-dom";
 import MainLogo from "../images/mainLogo.png";
@@ -22,7 +22,10 @@ function Header() {
   const userInfo = useSelector((state) => state.userInfo);
 
   const navigate = useNavigate();
+
+  const [activeStatus, setActiveStatus] = useState();
   function clickEventHandler(text) {
+    setActiveStatus(text);
     switch (text) {
       case "공지사항":
         navigate("/notice");
@@ -51,14 +54,26 @@ function Header() {
           <CommonBtn
             text={"공지사항"}
             onClick={() => clickEventHandler("공지사항")}
+            style={{
+              borderBottom:
+                activeStatus === "공지사항" ? "4px solid #F77575" : "none",
+            }}
           />
           <CommonBtn
             text={"스쿼드메이커"}
             onClick={() => clickEventHandler("스쿼드메이커")}
+            style={{
+              borderBottom:
+                activeStatus === "스쿼드메이커" ? "4px solid #F77575" : "none",
+            }}
           />
           <CommonBtn
             text={"자유게시판"}
             onClick={() => clickEventHandler("자유게시판")}
+            style={{
+              borderBottom:
+                activeStatus === "자유게시판" ? "4px solid #F77575" : "none",
+            }}
           />
         </div>
         <div className="right-wrapper">
