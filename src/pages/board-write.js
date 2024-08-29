@@ -1,35 +1,49 @@
 import "../styles/board-write.css";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import axios from "axios"; // axios 설치 필요
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import app from "../firebase"; // firebase 설정 파일
 
 function BoardWrite() {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [image, setImage] = useState(null); // 이미지 상태 추가
+  const [image, setImage] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const postData = new FormData();
-    postData.append("title", title);
-    postData.append("content", content);
-    if (image) {
-      postData.append("image", image); // 이미지 추가
-    }
+    const db = getFirestore(app);
+    const storage = getStorage(app);
 
     try {
-      await axios.post("http://localhost:3000/posts", postData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      let imageUrl = null;
+
+      // 이미지가 있으면 Firebase Storage에 업로드
+      if (image) {
+        const storageRef = ref(storage, `images/${image.name}`);
+        await uploadBytes(storageRef, image);
+        imageUrl = await getDownloadURL(storageRef);
+      }
+
+      // Firestore에 게시글 데이터 저장
+      await addDoc(collection(db, "boards"), {
+        title,
+        content,
+        imageUrl,
+        createdAt: new Date(),
       });
+
       alert("게시글이 성공적으로 작성되었습니다!");
+
       // 작성 후 초기화
       setTitle("");
       setContent("");
       setImage(null);
+      navigate("/board");
     } catch (error) {
       console.error("게시글 작성 중 오류 발생:", error);
       alert("게시글 작성에 실패했습니다.");
