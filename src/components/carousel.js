@@ -3,11 +3,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 
-import carouselImg1 from "../images/carousel1.jpg";
-import carouselImg2 from "../images/carousel2.jpg";
-import carouselImg3 from "../images/carousel3.jpg";
-import carouselImg4 from "../images/carousel4.jpg";
-import carouselImg5 from "../images/carousel5.jpg";
+import carouselImg1 from "../images/carousel/carousel1.jpg";
+import carouselImg2 from "../images/carousel/carousel2.jpg";
+import carouselImg3 from "../images/carousel/carousel3.jpg";
+import carouselImg4 from "../images/carousel/carousel4.jpg";
+import carouselImg5 from "../images/carousel/carousel5.jpg";
 function Carousel() {
   const settings = {
     dots: true,

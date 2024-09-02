@@ -1,0 +1,14 @@
+.uniform-list {
+  margin-top: 1.5rem;
+  background-color: yellowgreen;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+
+  height: 60vh;
+
+  .uniform-img {
+    width: 3rem;
+    cursor: pointer;
+  }
+}

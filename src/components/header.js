@@ -35,7 +35,9 @@ function Header() {
         break;
       case "자유게시판":
         navigate("/board");
+        break;
       default:
+        navigate("/board");
         break;
     }
   }

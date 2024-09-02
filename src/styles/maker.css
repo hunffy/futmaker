@@ -1,0 +1,22 @@
+.maker {
+  height: 80vh;
+  display: flex;
+}
+
+.squad {
+  display: flex;
+  flex-direction: column;
+  input {
+    text-align: center;
+  }
+}
+
+.select-uniforms {
+  .select-position {
+    width: 20vw;
+    font-size: 1.5rem;
+    option {
+      text-align: center;
+    }
+  }
+}

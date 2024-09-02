@@ -1,6 +1,7 @@
 {
   "hosting": {
     "public": "build",
+    "site": "futmaker-9ea22",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
