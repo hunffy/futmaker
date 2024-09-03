@@ -14,6 +14,7 @@ import Notice from "./pages/notice";
 import Maker from "./pages/maker";
 import Board from "./pages/board";
 import BoardWrite from "./pages/board-write";
+import BoardDetail from "./pages/board-detail";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import Mypage from "./pages/mypage";
@@ -34,6 +35,7 @@ root.render(
           <Route path="/maker" element={<Maker />} />
           <Route path="/board" element={<Board />} />
           <Route path="/board-write" element={<BoardWrite />} />
+          <Route path="/board-detail/:id" element={<BoardDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/mypage" element={<Mypage />} />

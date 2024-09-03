@@ -9,19 +9,38 @@ import uniform7 from "../images/uniformList/sky.png";
 import uniform8 from "../images/uniformList/sky2.png";
 import uniform9 from "../images/uniformList/sky3.png";
 import uniform10 from "../images/uniformList/white.png";
-function UniformList() {
+
+const uniforms = [
+  uniform1,
+  uniform2,
+  uniform3,
+  uniform4,
+  uniform5,
+  uniform6,
+  uniform7,
+  uniform8,
+  uniform9,
+  uniform10,
+];
+
+function UniformList({ onSelectUniform }) {
+  const handleDragStart = (e, uniform) => {
+    e.dataTransfer.setData("text/plain", uniform);
+  };
+
   return (
     <div className="uniform-list">
-      <img className="uniform-img" src={uniform1} alt="유니폼이미지" />
-      <img className="uniform-img" src={uniform2} alt="유니폼이미지" />
-      <img className="uniform-img" src={uniform3} alt="유니폼이미지" />
-      <img className="uniform-img" src={uniform4} alt="유니폼이미지" />
-      <img className="uniform-img" src={uniform5} alt="유니폼이미지" />
-      <img className="uniform-img" src={uniform6} alt="유니폼이미지" />
-      <img className="uniform-img" src={uniform7} alt="유니폼이미지" />
-      <img className="uniform-img" src={uniform8} alt="유니폼이미지" />
-      <img className="uniform-img" src={uniform9} alt="유니폼이미지" />
-      <img className="uniform-img" src={uniform10} alt="유니폼이미지" />
+      {uniforms.map((uniform, index) => (
+        <img
+          key={index}
+          className="uniform-img"
+          src={uniform}
+          alt="유니폼이미지"
+          onClick={() => onSelectUniform(uniform)}
+          draggable
+          onDragStart={(e) => handleDragStart(e, uniform)}
+        />
+      ))}
     </div>
   );
 }

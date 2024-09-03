@@ -1,0 +1,50 @@
+.board-detail {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  .board-origin {
+    .board-tit-wrapper {
+      width: 100%;
+      height: 5vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid gray;
+      h2 {
+        width: 70%;
+        text-align: center;
+      }
+      .board-author {
+        width: 15%;
+        color: gray;
+      }
+      .board-date {
+        width: 15%;
+        color: gray;
+      }
+    }
+    .board-content {
+      height: 40vh;
+    }
+  }
+}
+
+.comment-section {
+  width: 100%;
+  textarea {
+    width: 70%;
+  }
+}
+
+.comment {
+  display: flex;
+  margin-bottom: 1rem;
+  .comment-author {
+  }
+  .comment-content {
+    margin-left: 1rem;
+  }
+  .comment-date {
+    margin-left: 1rem;
+  }
+}

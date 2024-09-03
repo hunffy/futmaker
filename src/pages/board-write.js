@@ -6,12 +6,14 @@ import "react-quill/dist/quill.snow.css";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import app from "../firebase"; // firebase 설정 파일
+import { useSelector } from "react-redux"; // 사용자 정보 가져오기
 
 function BoardWrite() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
+  const userInfo = useSelector((state) => state.userInfo); // 사용자 정보 가져오기
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,6 +36,7 @@ function BoardWrite() {
         title,
         content,
         imageUrl,
+        userId: userInfo.userId, // 사용자 ID 추가
         createdAt: new Date(),
       });
 
@@ -59,12 +62,14 @@ function BoardWrite() {
             placeholder="글 제목을 입력하세요"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            required
           />
         </div>
         <ReactQuill
           value={content}
           onChange={setContent}
           placeholder="내용을 입력하세요"
+          required
         />
         <div className="image-upload">
           <input
