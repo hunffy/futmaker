@@ -3,8 +3,13 @@ import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import Modal from "../components/modal";
 import { useDispatch } from "react-redux";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import app from "../firebase";
 
 function Login() {
@@ -17,11 +22,6 @@ function Login() {
 
   useEffect(() => {
     getAuth(app);
-    if (window.Kakao) {
-      if (!window.Kakao.isInitialized()) {
-        window.Kakao.init("60e28f54dfe04b64f60e586bb823f191");
-      }
-    }
   }, []);
 
   async function loginHandler() {
@@ -43,7 +43,20 @@ function Login() {
         localStorage.setItem("userInfo", JSON.stringify(userData));
         navigate("/");
       } else {
-        alert("사용자 정보를 찾을 수 없습니다.");
+        // 새 사용자 정보 추가
+        await setDoc(doc(db, "users", user.uid), {
+          email: user.email,
+          displayName: user.displayName || userId, // displayName이 없을 경우 userId를 사용
+          // 필요한 추가 정보
+        });
+        const userData = {
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName || userId,
+        };
+        dispatch({ type: "LOGIN_USER", payload: userData });
+        localStorage.setItem("userInfo", JSON.stringify(userData));
+        navigate("/");
       }
     } catch (error) {
       alert("아이디 또는 비밀번호가 일치하지 않습니다.");
@@ -51,33 +64,42 @@ function Login() {
     }
   }
 
-  const kakaoLoginHandler = () => {
-    if (!window.Kakao) {
-      alert("카카오 SDK가 로드되지 않았습니다.");
-      return;
-    }
+  const googleLoginHandler = async () => {
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
 
-    window.Kakao.Auth.login({
-      success: function (authObj) {
-        window.Kakao.API.request({
-          url: "/v2/user/me",
-          success: function (res) {
-            const user = {
-              userId: res.kakao_account.email,
-            };
-            dispatch({ type: "LOGIN_USER", payload: user });
-            localStorage.setItem("userInfo", JSON.stringify(user));
-            navigate("/");
-          },
-          fail: function (error) {
-            console.log(error);
-          },
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      // Firestore에서 추가 사용자 정보 가져오기
+      const db = getFirestore();
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (userDoc.exists()) {
+        const userData = { uid: user.uid, ...userDoc.data() };
+        dispatch({ type: "LOGIN_USER", payload: userData });
+        localStorage.setItem("userInfo", JSON.stringify(userData));
+        navigate("/");
+      } else {
+        // 새 사용자 정보 추가
+        await setDoc(doc(db, "users", user.uid), {
+          email: user.email,
+          displayName: user.displayName || userId, // displayName이 없을 경우 userId를 사용
+          // 필요한 추가 정보
         });
-      },
-      fail: function (err) {
-        alert(JSON.stringify(err));
-      },
-    });
+        const userData = {
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName || userId,
+        };
+        dispatch({ type: "LOGIN_USER", payload: userData });
+        localStorage.setItem("userInfo", JSON.stringify(userData));
+        navigate("/");
+      }
+    } catch (error) {
+      alert("구글 로그인 중 오류가 발생했습니다.");
+      console.log("구글 로그인 시도 중 에러 발생", error);
+    }
   };
 
   return (
@@ -102,8 +124,8 @@ function Login() {
           <button className="login-btn" onClick={loginHandler}>
             로그인
           </button>
-          <button className="kakao-login-btn" onClick={kakaoLoginHandler}>
-            카카오톡 로그인
+          <button className="google-login-btn" onClick={googleLoginHandler}>
+            구글 로그인
           </button>
         </div>
         <div className="login-more">
