@@ -35,6 +35,15 @@ function Maker() {
     setSelectedUniforms((prev) => [...prev, uniformData]);
   };
 
+  const handleSubmit = () => {
+    const squadData = {
+      name: squadName,
+      uniforms: selectedUniforms,
+    };
+    localStorage.setItem(`squad_${squadName}`, JSON.stringify(squadData));
+    alert("스쿼드가 저장되었습니다!");
+  };
+
   return (
     <div className="maker">
       <div className="squadmaker-wrapper">
@@ -48,7 +57,7 @@ function Maker() {
             placeholder="스쿼드명을 입력하세요."
             onChange={(e) => setSquadName(e.target.value)}
           />
-          <button>최종제출</button>
+          <button onClick={handleSubmit}>최종제출</button>
           <div className="selected-uniforms">
             {selectedUniforms.map((uniformData, index) => (
               <div

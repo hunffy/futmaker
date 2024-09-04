@@ -1,5 +1,5 @@
 import "../styles/board-write.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -37,6 +37,7 @@ function BoardWrite() {
         content,
         imageUrl,
         userId: userInfo.userId, // 사용자 ID 추가
+        // squadImage와 uniforms 필드 제거
         createdAt: new Date(),
       });
 

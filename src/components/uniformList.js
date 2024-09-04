@@ -61,7 +61,7 @@ function UniformList({ onSelectUniform }) {
           />
         ))}
       </div>
-      <div className="uniform-info">
+      <div className="uniforms-info">
         <input
           type="text"
           placeholder="등번호"

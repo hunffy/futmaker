@@ -140,6 +140,13 @@ function BoardDetail() {
             </a>
           </div>
         )}
+
+        {/* 이미지 출력 추가 */}
+        {board.imageUrl && ( // 이미지 URL이 존재할 경우에만 출력
+          <div className="board-detail-image">
+            <img src={board.imageUrl} alt="게시물 이미지" />
+          </div>
+        )}
       </div>
 
       {/* 댓글 작성란 */}
@@ -170,8 +177,7 @@ function BoardDetail() {
                 작성일 :
                 {comment.createdAt
                   ? format(comment.createdAt, "yyyy-MM-dd HH:mm:ss")
-                  : "알 수 없음"}{" "}
-                {/* 유효성 검사 추가 */}
+                  : "알 수 없음"}
               </div>
             </div>
           ))}
