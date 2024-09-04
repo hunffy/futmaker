@@ -6,21 +6,33 @@ import UniformList from "../components/uniformList";
 function Maker() {
   const [squadName, setSquadName] = useState("");
   const [selectedUniforms, setSelectedUniforms] = useState([]);
+  const [draggedIndex, setDraggedIndex] = useState(null);
+
+  const handleDragStart = (index) => {
+    setDraggedIndex(index);
+  };
 
   const handleDrop = (e, index) => {
     e.preventDefault();
-    const uniform = e.dataTransfer.getData("text/plain");
     const newUniforms = [...selectedUniforms];
-    newUniforms[index] = uniform; // 드롭한 위치에 유니폼 이미지 배치
-    setSelectedUniforms(newUniforms);
-  };
+    const draggedUniform = newUniforms[draggedIndex];
 
-  const handleDragStart = (e, uniform) => {
-    e.dataTransfer.setData("text/plain", uniform);
+    // 드래그한 유니폼을 새로운 위치로 이동
+    if (index !== draggedIndex) {
+      newUniforms.splice(draggedIndex, 1); // 원래 위치에서 제거
+      newUniforms.splice(index, 0, draggedUniform); // 새로운 위치에 추가
+    }
+
+    setSelectedUniforms(newUniforms);
+    setDraggedIndex(null); // 드래그 인덱스 초기화
   };
 
   const handleDragOver = (e) => {
-    e.preventDefault(); // 드래그 오버 시 기본 동작 방지
+    e.preventDefault();
+  };
+
+  const handleSelectUniform = (uniformData) => {
+    setSelectedUniforms((prev) => [...prev, uniformData]);
   };
 
   return (
@@ -38,34 +50,43 @@ function Maker() {
           />
           <button>최종제출</button>
           <div className="selected-uniforms">
-            {selectedUniforms.map((uniform, index) => (
-              <img
+            {selectedUniforms.map((uniformData, index) => (
+              <div
                 key={index}
-                src={uniform}
-                alt={`유니폼 ${index + 1}`}
-                className="selected-uniform"
+                className="uniform-data"
                 draggable
-                onDragStart={(e) => handleDragStart(e, uniform)}
-                onDrop={(e) => handleDrop(e, index)}
+                onDragStart={() => handleDragStart(index)}
                 onDragOver={handleDragOver}
-              />
+                onDrop={(e) => handleDrop(e, index)}
+              >
+                <img
+                  src={uniformData.uniform}
+                  alt={`유니폼 ${index + 1}`}
+                  className="selected-uniform"
+                />
+                <div className="player-position">{uniformData.position}</div>
+                <div className="player-info">
+                  <div className="player-number">{uniformData.number}</div>
+                  <div className="player-name">{uniformData.name}</div>
+                </div>
+              </div>
             ))}
+            {/* 빈 공간을 위한 추가 div */}
+            {selectedUniforms.length < 5 && (
+              <div
+                className="empty-slot"
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleDrop(e, selectedUniforms.length)}
+              >
+                빈 공간
+              </div>
+            )}
           </div>
         </div>
       </div>
       <div className="select-uniforms">
-        <select className="select-position">
-          <option>1-3-2</option>
-          <option>1-2-3</option>
-          <option>1-2-1-2</option>
-          <option>1-3-1-1</option>
-        </select>
         <div className="select-uniform">
-          <UniformList
-            onSelectUniform={(uniform) =>
-              setSelectedUniforms((prev) => [...prev, uniform])
-            }
-          />
+          <UniformList onSelectUniform={handleSelectUniform} />
         </div>
       </div>
     </div>

@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import "../styles/uniformlist.css";
 import uniform1 from "../images/uniformList/blue.png";
 import uniform2 from "../images/uniformList/blue2.png";
@@ -24,23 +25,63 @@ const uniforms = [
 ];
 
 function UniformList({ onSelectUniform }) {
+  const [selectedUniform, setSelectedUniform] = useState(null);
+  const [number, setNumber] = useState("");
+  const [name, setName] = useState("");
+  const [position, setPosition] = useState("");
+
   const handleDragStart = (e, uniform) => {
     e.dataTransfer.setData("text/plain", uniform);
   };
 
+  const handleAddUniform = () => {
+    if (selectedUniform) {
+      onSelectUniform({ uniform: selectedUniform, number, name, position });
+      setNumber("");
+      setName("");
+      setPosition("");
+      setSelectedUniform(null); // 추가 후 선택 초기화
+    }
+  };
+
   return (
-    <div className="uniform-list">
-      {uniforms.map((uniform, index) => (
-        <img
-          key={index}
-          className="uniform-img"
-          src={uniform}
-          alt="유니폼이미지"
-          onClick={() => onSelectUniform(uniform)}
-          draggable
-          onDragStart={(e) => handleDragStart(e, uniform)}
+    <div className="uniformList">
+      <div className="uniform-list">
+        {uniforms.map((uniform, index) => (
+          <img
+            key={index}
+            className={`uniform-img ${
+              selectedUniform === uniform ? "selected" : ""
+            }`}
+            src={uniform}
+            alt="유니폼이미지"
+            onClick={() => setSelectedUniform(uniform)}
+            draggable
+            onDragStart={(e) => handleDragStart(e, uniform)}
+          />
+        ))}
+      </div>
+      <div className="uniform-info">
+        <input
+          type="text"
+          placeholder="등번호"
+          value={number}
+          onChange={(e) => setNumber(e.target.value)}
         />
-      ))}
+        <input
+          type="text"
+          placeholder="이름"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="포지션"
+          value={position}
+          onChange={(e) => setPosition(e.target.value)}
+        />
+        <button onClick={handleAddUniform}>추가</button>
+      </div>
     </div>
   );
 }
