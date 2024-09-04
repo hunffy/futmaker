@@ -8,19 +8,23 @@ import {
   query,
   where,
   getDocs,
-} from "firebase/firestore"; // Firestore 가져오기
+} from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import { format } from "date-fns"; // 날짜 포맷팅을 위한 라이브러리
+import { format } from "date-fns";
 
 function Board() {
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.userInfo);
   const [boards, setBoards] = useState([]);
-  const [authors, setAuthors] = useState({}); // 작성자 정보를 저장할 상태 추가
+  const [authors, setAuthors] = useState({});
+
+  // 페이지네이션 상태 추가
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(5); // 페이지당 게시물 수
 
   useEffect(() => {
     const db = getFirestore();
-    const boardsRef = collection(db, "boards"); // "boards" 컬렉션에서 데이터를 가져온다
+    const boardsRef = collection(db, "boards");
     const unsubscribe = onSnapshot(boardsRef, async (snapshot) => {
       const boardsArray = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -29,31 +33,40 @@ function Board() {
 
       setBoards(boardsArray);
 
-      // 작성자 정보를 가져오기
-      const authorIds = boardsArray.map((board) => board.userId); // 작성자 ID 배열
+      const authorIds = boardsArray.map((board) => board.userId);
       const authorsData = {};
 
       for (const authorId of authorIds) {
         const usersRef = collection(db, "users");
-        const q = query(usersRef, where("userId", "==", authorId)); // userId로 쿼리
+        const q = query(usersRef, where("userId", "==", authorId));
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {
           const authorData = querySnapshot.docs[0].data();
-          authorsData[authorId] = authorData.userId; // 작성자 ID와 이름 저장
+          authorsData[authorId] = authorData.userId;
         }
       }
 
-      setAuthors(authorsData); // 작성자 정보 상태 업데이트
+      setAuthors(authorsData);
     });
 
-    // 컴포넌트 언마운트 시 구독 해제
     return () => unsubscribe();
   }, []);
 
   const handleTitleClick = (id) => {
-    navigate(`/board-detail/${id}`); // 게시물 ID를 URL에 추가
+    navigate(`/board-detail/${id}`);
   };
+
+  // 현재 페이지에 해당하는 게시물 가져오기
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = boards.slice(indexOfFirstPost, indexOfLastPost);
+
+  // 페이지 번호 생성
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(boards.length / postsPerPage); i++) {
+    pageNumbers.push(i);
+  }
 
   return (
     <div className="board">
@@ -71,8 +84,8 @@ function Board() {
         <div className="category-author">작성자</div>
         <div className="category-date">작성일</div>
       </div>
-      {boards.length > 0 ? (
-        boards.map((board) => (
+      {currentPosts.length > 0 ? (
+        currentPosts.map((board) => (
           <div className="board-item" key={board.id}>
             <div
               className="board-tit"
@@ -82,8 +95,7 @@ function Board() {
             </div>
             <div className="board-content">
               {board.content.replace(/<[^>]+>/g, "")}
-            </div>{" "}
-            {/* HTML 태그 제거 */}
+            </div>
             <div className="board-author">
               {authors[board.userId] || "알 수 없음"}
             </div>
@@ -97,6 +109,19 @@ function Board() {
       ) : (
         <div>게시물이 없습니다.</div>
       )}
+
+      {/* 페이지네이션 버튼 */}
+      <div className="pagination">
+        {pageNumbers.map((number) => (
+          <button
+            key={number}
+            onClick={() => setCurrentPage(number)}
+            className={currentPage === number ? "active" : ""}
+          >
+            {number}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

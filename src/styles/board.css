@@ -58,3 +58,21 @@
     text-align: center;
   }
 }
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+.pagination button {
+  border: none;
+  background-color: #23af17;
+  cursor: pointer;
+  border-radius: 50%;
+  margin-left: 0.5rem;
+  color: white;
+}
+
+.pagination button.active {
+  font-weight: bold;
+  color: black;
+}
