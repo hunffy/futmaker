@@ -13,7 +13,7 @@ function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
-  const userInfo = useSelector((state) => state.userInfo); // 사용자 정보 가져오기
+  const userInfo = useSelector((state) => state.userInfo);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,14 +36,13 @@ function BoardWrite() {
         title,
         content,
         imageUrl,
-        userId: userInfo.userId, // 사용자 ID 추가
-        // squadImage와 uniforms 필드 제거
+        userId: userInfo.userId,
+
         createdAt: new Date(),
       });
 
       alert("게시글이 성공적으로 작성되었습니다!");
 
-      // 작성 후 초기화
       setTitle("");
       setContent("");
       setImage(null);

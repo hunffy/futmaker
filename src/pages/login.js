@@ -46,8 +46,7 @@ function Login() {
         // 새 사용자 정보 추가
         await setDoc(doc(db, "users", user.uid), {
           email: user.email,
-          displayName: user.displayName || userId, // displayName이 없을 경우 userId를 사용
-          // 필요한 추가 정보
+          displayName: user.displayName || userId,
         });
         const userData = {
           uid: user.uid,
@@ -84,8 +83,7 @@ function Login() {
         // 새 사용자 정보 추가
         await setDoc(doc(db, "users", user.uid), {
           email: user.email,
-          displayName: user.displayName || userId, // displayName이 없을 경우 userId를 사용
-          // 필요한 추가 정보
+          displayName: user.displayName || userId, //
         });
         const userData = {
           uid: user.uid,

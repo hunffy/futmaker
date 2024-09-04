@@ -13,15 +13,15 @@ import {
 } from "firebase/firestore"; // Firestore 가져오기
 import { getAuth, onAuthStateChanged } from "firebase/auth"; // Firebase Authentication 가져오기
 import { format } from "date-fns"; // 날짜 포맷팅을 위한 라이브러리
-import "../styles/board-detail.css"; // 스타일 추가
+import "../styles/board-detail.css";
 
 function BoardDetail() {
-  const { id } = useParams(); // URL에서 게시물 ID 가져오기
+  const { id } = useParams();
   const [board, setBoard] = useState(null);
-  const [authorName, setAuthorName] = useState(""); // 작성자 이름 상태 추가
-  const [comments, setComments] = useState([]); // 댓글 상태 추가
-  const [newComment, setNewComment] = useState(""); // 새 댓글 상태 추가
-  const [currentUserId, setCurrentUserId] = useState(null); // 현재 사용자 ID 상태 추가
+  const [authorName, setAuthorName] = useState("");
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
+  const [currentUserId, setCurrentUserId] = useState(null);
   const [currentUserEmail, setCurrentUserEmail] = useState("");
   useEffect(() => {
     const auth = getAuth();
@@ -40,7 +40,7 @@ function BoardDetail() {
 
   useEffect(() => {
     const db = getFirestore();
-    const boardRef = doc(db, "boards", id); // 해당 게시물 문서 참조
+    const boardRef = doc(db, "boards", id);
 
     const fetchBoard = async () => {
       const docSnap = await getDoc(boardRef);
@@ -50,13 +50,13 @@ function BoardDetail() {
 
         // 작성자 ID로 사용자 정보 가져오기
         const usersRef = collection(db, "users");
-        const q = query(usersRef, where("userId", "==", boardData.userId)); // 이메일로 쿼리
+        const q = query(usersRef, where("userId", "==", boardData.userId));
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {
           const authorData = querySnapshot.docs[0].data();
           console.log("확인해보자", authorData);
-          setAuthorName(authorData.userId); // 사용자 이름을 상태에 저장
+          setAuthorName(authorData.userId);
         } else {
           console.log("작성자 정보를 찾을 수 없습니다.");
         }
@@ -68,7 +68,7 @@ function BoardDetail() {
     const fetchComments = async () => {
       const db = getFirestore();
       const commentsRef = collection(db, "comments");
-      const q = query(commentsRef, where("boardId", "==", id)); // 게시물 ID로 댓글 쿼리
+      const q = query(commentsRef, where("boardId", "==", id));
       const querySnapshot = await getDocs(q);
       const commentsData = querySnapshot.docs.map((doc) => {
         const data = doc.data();
@@ -78,7 +78,7 @@ function BoardDetail() {
           createdAt:
             data.createdAt instanceof Timestamp
               ? data.createdAt.toDate()
-              : new Date(data.createdAt || 0), // Timestamp 변환 및 기본값 설정
+              : new Date(data.createdAt || 0),
         };
       });
       setComments(commentsData);
@@ -97,19 +97,18 @@ function BoardDetail() {
       content: newComment,
       userEmail: currentUserEmail, // 현재 로그인된 사용자 ID
       createdAt: Timestamp.fromDate(new Date()), // 현재 시간을 Firestore Timestamp로 저장
-      boardId: id, // 댓글이 속한 게시물 ID
+      boardId: id,
     };
 
     const docRef = await addDoc(collection(db, "comments"), commentData); // 댓글 Firestore에 추가
     setComments([...comments, { ...commentData, id: docRef.id }]); // Firestore에서 생성된 ID 사용
-    setNewComment(""); // 입력란 초기화
+    setNewComment("");
   };
 
   if (!board) {
-    return <div>로딩 중...</div>; // 데이터 로딩 중 표시
+    return <div>로딩 중...</div>;
   }
 
-  // HTML 태그 제거
   const cleanContent = board.content.replace(/<[^>]+>/g, "");
 
   return (

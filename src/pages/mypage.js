@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import "../styles/mypage.css";
-import SquadImage from "../images/squad.png"; // 고정된 경로로 이미지 import
+import SquadImage from "../images/squad.png";
 
 function Mypage() {
   const userInfo = useSelector((state) => state.userInfo);
@@ -45,7 +45,7 @@ function Mypage() {
               <img
                 src={uniform.uniform}
                 alt={`유니폼 ${index + 1}`}
-                style={{ width: "100%", height: "100%" }} // 유니폼 이미지 크기 조정
+                style={{ width: "100%", height: "100%" }}
               />
               <div className="uniform-info">
                 <div>이름: {uniform.name}</div>
@@ -70,9 +70,8 @@ function Mypage() {
     squadImage.src = SquadImage;
 
     squadImage.onload = () => {
-      // 캔버스 크기 설정
-      canvas.width = 800; // 원하는 너비
-      canvas.height = 600; // 원하는 높이
+      canvas.width = 800;
+      canvas.height = 600;
       context.clearRect(0, 0, canvas.width, canvas.height);
       context.drawImage(squadImage, 0, 0, canvas.width, canvas.height);
 
@@ -96,7 +95,7 @@ function Mypage() {
         link.download = `${selectedSquad.name}_squad_image.png`;
         link.href = canvas.toDataURL("image/png");
         link.click();
-      }, 1000); // 이미지가 로드될 시간을 주기 위해 1초 대기
+      }, 1000);
     };
   };
 
