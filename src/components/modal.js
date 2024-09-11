@@ -1,46 +1,67 @@
 import "../styles/modal.css";
 import React, { useState } from "react";
-import axios from "axios";
+import { getFirestore, collection, getDocs } from "firebase/firestore"; // Firestore 관련 import
 import { useDispatch } from "react-redux";
+
 function Modal(props) {
   const dispatch = useDispatch();
-  const [phone, setPhone] = useState();
-  const [id, setId] = useState();
+  const [phone, setPhone] = useState("");
+  const [id, setId] = useState("");
 
   async function SearchResult(title) {
+    const db = getFirestore(); // Firestore 인스턴스 가져오기
+    const usersCollection = collection(db, "users"); // "users" 컬렉션 참조
+
     if (title === "아이디찾기") {
       try {
-        const response = await axios.get("http://localhost:3000/users");
-        const result = response.data.find((user) => user.userPhone === phone);
-        alert(result.userId);
+        const snapshot = await getDocs(usersCollection); // 사용자 데이터 가져오기
+        const users = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })); // 데이터 배열로 변환
+        const result = users.find((user) => user.userPhone === phone); // 전화번호로 사용자 찾기
+
+        if (result) {
+          alert(`아이디: ${result.userId}`);
+        } else {
+          alert("아이디를 찾을 수 없습니다. 입력정보를 확인해주세요.");
+        }
       } catch (error) {
         alert("아이디를 찾을 수 없습니다. 입력정보를 확인해주세요.");
         console.log("아이디찾기오류", error);
       }
     } else if (title === "비밀번호찾기") {
       try {
-        const response = await axios.get("http://localhost:3000/users");
-        const result = response.data.find(
+        const snapshot = await getDocs(usersCollection);
+        const users = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        const result = users.find(
           (user) => user.userId === id && user.userPhone === phone
         );
-        alert(result.userPw);
-      } catch (error) {
-        alert("비밀번호를 찾을 수 없습니다. 입력정보를 확인해주세요");
 
+        if (result) {
+          alert(`비밀번호: ${result.userPw}`);
+        } else {
+          alert("비밀번호를 찾을 수 없습니다. 입력정보를 확인해주세요.");
+        }
+      } catch (error) {
+        alert("비밀번호를 찾을 수 없습니다. 입력정보를 확인해주세요.");
         console.log("비밀번호찾기오류", error);
       }
     }
   }
 
   function handleCloseModal() {
-    props.setOpenModal(!false);
+    props.setOpenModal(false);
   }
 
   const handleClickInput = (e) => {
     e.stopPropagation();
   };
 
-  return props.title == "아이디찾기" ? (
+  return props.title === "아이디찾기" ? (
     <div className="Id-Modal">
       <div className="modal-wrapper">
         <h1>{props.title}</h1>

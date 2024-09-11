@@ -36,6 +36,7 @@ function SignUp() {
       await setDoc(doc(db, "users", user.uid), {
         userId,
         userPhone,
+        userPw,
       });
 
       alert("회원가입 완료");

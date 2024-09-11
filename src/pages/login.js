@@ -127,26 +127,24 @@ function Login() {
           </button>
         </div>
         <div className="login-more">
-          <button onClick={() => setIdModal(!IdnModal)}>
-            아이디찾기
-            {IdnModal && (
-              <Modal
-                title={"아이디찾기"}
-                openModal={IdnModal}
-                setOpenModal={setIdModal}
-              />
-            )}
-          </button>
-          <button onClick={() => setPwModal(!pwModal)}>
-            비밀번호찾기
-            {pwModal && (
-              <Modal
-                title={"비밀번호찾기"}
-                openModal={pwModal}
-                setOpenModal={setPwModal}
-              />
-            )}
-          </button>
+          <button onClick={() => setIdModal(true)}>아이디찾기</button>
+          {IdnModal && (
+            <Modal
+              title={"아이디찾기"}
+              openModal={IdnModal}
+              setOpenModal={setIdModal}
+            />
+          )}
+
+          <button onClick={() => setPwModal(true)}>비밀번호찾기</button>
+          {pwModal && (
+            <Modal
+              title={"비밀번호찾기"}
+              openModal={pwModal}
+              setOpenModal={setPwModal}
+            />
+          )}
+
           <button onClick={() => navigate("/signup")}>회원가입</button>
         </div>
       </div>
