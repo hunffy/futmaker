@@ -49,29 +49,35 @@
 
 .selected-uniforms {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, auto);
+  gap: 10px;
+  pointer-events: none;
+}
+
+.uniform-data {
+  padding: 10px;
+  text-align: center;
+  cursor: move;
   display: flex;
-  .uniform-data {
-    margin-left: 2rem;
-    display: flex;
-    align-items: center;
-    margin: 10px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    transition: box-shadow 0.2s;
-    .player-position {
-      text-align: center;
-      font-weight: bold;
-      color: blue;
-    }
-    .player-info {
-      display: flex;
-      .player-number {
-        font-weight: bold;
-      }
-    }
-  }
+  align-items: center;
+  pointer-events: auto;
+}
+
+.player-position {
+  font-weight: bold;
+  color: blue;
+}
+
+.player-info {
+  display: flex;
+}
+
+.player-number {
+  font-weight: bold;
 }
 
 .uniform-data.dragging {
@@ -81,14 +87,4 @@
 .selected-uniform {
   width: 50px;
   height: auto;
-}
-
-.empty-slot {
-  border: 2px dashed #ccc;
-  height: 100px; /* 원하는 높이 설정 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #aaa;
-  margin: 10px;
 }

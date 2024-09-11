@@ -17,14 +17,13 @@ function Maker() {
     const newUniforms = [...selectedUniforms];
     const draggedUniform = newUniforms[draggedIndex];
 
-    // 드래그한 유니폼을 새로운 위치로 이동
     if (index !== draggedIndex) {
-      newUniforms.splice(draggedIndex, 1); // 원래 위치에서 제거
-      newUniforms.splice(index, 0, draggedUniform); // 새로운 위치에 추가
+      newUniforms.splice(draggedIndex, 1);
+      newUniforms.splice(index, 0, draggedUniform);
     }
 
     setSelectedUniforms(newUniforms);
-    setDraggedIndex(null); // 드래그 인덱스 초기화
+    setDraggedIndex(null);
   };
 
   const handleDragOver = (e) => {
@@ -32,7 +31,11 @@ function Maker() {
   };
 
   const handleSelectUniform = (uniformData) => {
-    setSelectedUniforms((prev) => [...prev, uniformData]);
+    if (selectedUniforms.length < 6) {
+      setSelectedUniforms((prev) => [...prev, uniformData]);
+    } else {
+      alert("최대 6개의 유니폼만 선택할 수 있습니다.");
+    }
   };
 
   const handleSubmit = () => {
@@ -80,16 +83,6 @@ function Maker() {
                 </div>
               </div>
             ))}
-            {/* 빈 공간을 위한 추가 div */}
-            {selectedUniforms.length < 5 && (
-              <div
-                className="empty-slot"
-                onDragOver={handleDragOver}
-                onDrop={(e) => handleDrop(e, selectedUniforms.length)}
-              >
-                빈 공간
-              </div>
-            )}
           </div>
         </div>
       </div>

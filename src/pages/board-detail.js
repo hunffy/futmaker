@@ -85,26 +85,13 @@ function BoardDetail() {
     if (newComment.trim() === "") return; // 빈 댓글 제출 방지
 
     const db = getFirestore();
+
     const commentData = {
       content: newComment,
       userEmail: currentUserEmail,
       createdAt: Timestamp.fromDate(new Date()), // Firestore Timestamp로 저장
       boardId: id,
     };
-
-    const querySnapshot = await getDocs(collection(db, "comments"));
-
-    const commentsData = querySnapshot.docs.map((doc) => {
-      const data = doc.data();
-      return {
-        id: doc.id,
-        ...data,
-        createdAt:
-          data.createdAt instanceof Timestamp
-            ? data.createdAt.toDate()
-            : new Date(data.createdAt || 0),
-      };
-    });
 
     const docRef = await addDoc(collection(db, "comments"), commentData); // 댓글 Firestore에 추가
     setComments([...comments, { ...commentData, id: docRef.id }]); // Firestore에서 생성된 ID 사용
