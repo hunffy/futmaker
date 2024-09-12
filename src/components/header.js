@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import MainLogo from "../images/mainLogo.png";
 import LoginLogo from "../images/login-logo.png";
 import LogOutLogo from "../images/logout-logo.png";
-import SearchLogo from "../images/search-logo.png";
 import MypageLogo from "../images/mypage-logo.png";
 
 import "../styles/header.css";
@@ -82,9 +81,7 @@ function Header() {
           <div className="mypageLogo" onClick={() => navigate("/mypage")}>
             <img src={MypageLogo} alt="마이페이지로고"></img>
           </div>
-          <div className="searchLogo">
-            <img src={SearchLogo} alt="검색로고"></img>
-          </div>
+
           <div className="loginLogo">
             {userInfo ? (
               <button onClick={logoutHandler}>
