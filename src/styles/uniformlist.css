@@ -9,7 +9,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 4열로 설정 */
   grid-template-rows: repeat(3, 1fr); /* 3행으로 설정 */
-  width: 20vw;
+  width: 40vw;
   height: 60vh;
 }
 

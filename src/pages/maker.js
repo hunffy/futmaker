@@ -50,9 +50,6 @@ function Maker() {
   return (
     <div className="maker">
       <div className="squadmaker-wrapper">
-        <div className="loadSuqad">
-          <button className="loadsquad-btn">불러오기</button>
-        </div>
         <div className="squad">
           <img className="squad-img" src={Squad} alt="스쿼드판" />
           <input

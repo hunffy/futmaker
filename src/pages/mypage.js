@@ -103,6 +103,7 @@ function Mypage() {
     return (
       <div className="mypage">
         <div className="u-info">
+          <h1 className="user-info-title">회원정보</h1>
           <h1>아이디 : {userInfo.userId}</h1>
           <h1>핸드폰번호 : {userInfo.userPhone}</h1>
         </div>

@@ -47,6 +47,11 @@
   }
 }
 
+.squad-img {
+  height: 60vh;
+  width: 30vw;
+}
+
 .selected-uniforms {
   position: absolute;
   top: 0;
