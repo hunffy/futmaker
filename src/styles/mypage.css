@@ -8,16 +8,17 @@
   flex-direction: column;
   border: 1px solid black;
   border-radius: 10px;
-  width: 25vw;
+  width: 40vw;
   height: 55vh;
   margin: 5vw;
   justify-content: center;
   align-items: center;
-  .user-info-title {
-    border-bottom: 3px solid black;
-    width: 10vw;
-    text-align: center;
-  }
+}
+
+.user-info-title {
+  border-bottom: 3px solid black;
+  width: 10vw;
+  text-align: center;
 }
 
 .squad-wrapper {
@@ -26,43 +27,58 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  margin-bottom: 30rem;
   select {
-    width: 30rem;
-    height: 2rem;
-    text-align: center;
-  }
-  .squad-info {
-    display: flex;
-    flex-direction: column;
+    width: 25vw;
+    height: 5vh;
   }
 }
 
 .squad-image {
   position: relative;
-  width: 500px;
-  height: 300px;
+  width: 50vw;
+  height: 60vh;
 }
 
 .squad-image img {
-  max-width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 25vw;
   height: auto;
 }
 
 .uniform {
-  position: absolute;
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+}
+
+.uniform .uniform-image {
   width: 50px;
   height: 50px;
+  object-fit: contain;
 }
 
 .uniform-info {
   position: absolute;
+  top: 20%;
+  left: 25%;
+  transform: translate(-50%, -50%);
   font-size: 12px;
   color: white;
+  font-weight: bold;
+  text-align: center;
+  width: 50px;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
 }
 
 .button-container {
-  margin-top: 420px;
   text-align: center;
+}
+
+.save-button {
+  width: 25vw;
 }

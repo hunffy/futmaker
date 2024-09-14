@@ -27,37 +27,28 @@ function Mypage() {
 
     return (
       <div className="squad-info">
-        <span>스쿼드명: {selectedSquad.name}</span>
-        <span>
-          스쿼드: {selectedSquad.uniforms.map((u) => u.position).join(", ")}
-        </span>
         <div className="squad-image">
           <img src={SquadImage} alt="스쿼드판" />
           {selectedSquad.uniforms.map((uniform, index) => (
-            <div
-              key={index}
-              className="uniform"
-              style={{
-                top: `${index * 60}px`, // 유니폼의 y 위치 조정
-                left: `${index * 60}px`, // 유니폼의 x 위치 조정
-              }}
-            >
+            <div key={index} className="uniform">
               <img
                 src={uniform.uniform}
                 alt={`유니폼 ${index + 1}`}
-                style={{ width: "100%", height: "100%" }}
+                className="uniform-image"
+                style={{
+                  width: `${uniform.width}px`,
+                  height: `${uniform.height}px`,
+                }} // 유니폼의 크기를 저장된 값으로 설정
               />
               <div className="uniform-info">
-                <div>이름: {uniform.name}</div>
-                <div>번호: {uniform.number}</div>
-                <div>포지션: {uniform.position}</div>
+                <div>{uniform.name}</div>
+                <div>{uniform.number}</div>
+                <div>{uniform.position}</div>
               </div>
             </div>
           ))}
         </div>
-        <div className="button-container">
-          <button onClick={handleSaveImage}>이미지 저장</button>
-        </div>
+
         <canvas ref={canvasRef} style={{ display: "none" }} />
       </div>
     );
@@ -108,6 +99,13 @@ function Mypage() {
           <h1>핸드폰번호 : {userInfo.userPhone}</h1>
         </div>
         <div className="squad-wrapper">
+          <button
+            className="save-button"
+            onClick={handleSaveImage}
+            disabled={!selectedSquad} // selectedSquad가 없으면 비활성화
+          >
+            이미지 저장
+          </button>
           <select onChange={handleSelectChange}>
             <option value="">스쿼드 선택</option>
             {squads.map((squad, index) => (
